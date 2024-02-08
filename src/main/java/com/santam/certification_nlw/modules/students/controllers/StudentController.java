@@ -1,6 +1,8 @@
 package com.santam.certification_nlw.modules.students.controllers;
 
+import com.santam.certification_nlw.modules.students.dto.StudentCertificationAnswerDTO;
 import com.santam.certification_nlw.modules.students.dto.VerifyHasCertificationDTO;
+import com.santam.certification_nlw.modules.students.useCases.StudentCertificationAnswersUseCase;
 import com.santam.certification_nlw.modules.students.useCases.VerifyIfHasCertificationUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +16,9 @@ public class StudentController {
     @Autowired
     private VerifyIfHasCertificationUseCase verifyIfHasCertificationUseCase;
 
+    @Autowired
+    private StudentCertificationAnswersUseCase studentCertificationAnswersUseCase;
+
     @PostMapping("/verify-if-has-certification")
     public String verifyIfHasCertification(@RequestBody VerifyHasCertificationDTO dto) {
         var result = verifyIfHasCertificationUseCase.execute(dto);
@@ -21,5 +26,10 @@ public class StudentController {
             return "Usuário já fez a prova";
         }
         return "Usuário pode fazer a prova";
+    }
+
+    @PostMapping("/certification/answer")
+    public StudentCertificationAnswerDTO certificationAnswer(@RequestBody StudentCertificationAnswerDTO StudentCertificationAnswer) {
+        return studentCertificationAnswersUseCase.execute(StudentCertificationAnswer);
     }
 }
