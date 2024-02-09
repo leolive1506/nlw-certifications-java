@@ -1,5 +1,7 @@
 package com.santam.certification_nlw.modules.students.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.santam.certification_nlw.modules.students.dto.QuestionAnswerDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,8 +39,16 @@ public class AnswersCertificationsEntity {
     private UUID answerID;
 
     @Column(name = "is_correct")
-    private UUID isCorrect;
+    private boolean isCorrect;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    public AnswersCertificationsEntity(QuestionAnswerDTO dto, CertificationStudentEntity certificationStudent) {
+        this.questionID = dto.getQuestionID();
+        this.answerID = dto.getAlternativeID();
+        this.isCorrect = dto.isCorrect();
+        this.certificationID = certificationStudent.getId();
+        this.studentID = certificationStudent.getStudentID();
+    }
 }

@@ -26,4 +26,8 @@ public class StudentEntity {
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    public StudentEntity(String email) {
+        this.email = email;
+    }
 }
